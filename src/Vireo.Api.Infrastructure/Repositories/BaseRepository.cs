@@ -3,7 +3,7 @@ using Vireo.Api.Core.Domain.Entities;
 using Vireo.Api.Core.Domain.Interfaces.Repositories;
 using Vireo.Api.Infrastructure.Data.Context;
 
-namespace Vireo.Api.Infrastructure.Data.Repositories;
+namespace Vireo.Api.Infrastructure.Repositories;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity, new()
 {
@@ -24,22 +24,22 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         return await DbSet.FindAsync(id);
     }
 
-    public virtual async Task AddAsync(TEntity entity)
+    public virtual async Task<bool> AddAsync(TEntity entity)
     {
         DbSet.Add(entity);
-        await Context.SaveChangesAsync();
+        return await Context.SaveChangesAsync() > 0;
     }
 
-    public virtual async Task UpdateAsync(TEntity entity)
+    public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
         DbSet.Update(entity);
-        await Context.SaveChangesAsync();
+        return await Context.SaveChangesAsync() > 0;
     }
 
-    public virtual async Task DeleteAsync(Guid id)
+    public virtual async Task<bool> DeleteAsync(Guid id)
     {
         DbSet.Remove(new TEntity { Id = id });
-        await Context.SaveChangesAsync();
+        return await Context.SaveChangesAsync() > 0;
     }
 
     public void Dispose()

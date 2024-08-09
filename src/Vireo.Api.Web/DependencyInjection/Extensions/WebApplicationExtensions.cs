@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-
-namespace Vireo.Api.Infrastructure.Extensions;
+﻿namespace Vireo.Api.Web.DependencyInjection.Extensions;
 
 public static class WebApplicationExtensions
 {

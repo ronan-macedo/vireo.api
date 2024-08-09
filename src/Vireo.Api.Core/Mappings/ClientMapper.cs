@@ -8,39 +8,14 @@ public static class ClientMapper
 {
     public static GetClientResponse ToGetClientResponse(this Client client)
     {
-        return new GetClientResponse
-        {
-            Id = client.Id,
-            Name = client.Name,
-            LastName = client.LastName,
-            Phone = client.Phone,
-            Email = client.Email,
-            Active = client.Active,
-            LastServiceDate = client.LastServiceDate
-        };
-    }
-
-    public static UpdateClientResponse ToUpdateClientResponse(this Client client)
-    {
-        return new UpdateClientResponse
-        {
-            Id = client.Id,
-            Name = client.Name,
-            LastName = client.LastName,
-            Phone = client.Phone,
-            Email = client.Email,
-            Active = client.Active
-        };
-    }
-
-    public static CreateClientResponse ToCreateClientResponse(this Client client)
-    {
-        return new CreateClientResponse
-        {
-            Id = client.Id,
-            Name = client.Name,
-            LastName = client.LastName
-        };
+        return new GetClientResponse(
+            client.Id,
+            client.Name,
+            client.LastName,
+            client.Phone,
+            client.Email,
+            client.Active,
+            client.LastServiceDate);
     }
 
     public static Client ToClient(this UpdateClientRequest request, Guid id)

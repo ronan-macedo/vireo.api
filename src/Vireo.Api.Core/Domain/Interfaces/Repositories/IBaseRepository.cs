@@ -6,9 +6,9 @@ public interface IBaseRepository<TEntity> : IDisposable where TEntity : BaseEnti
 {
     Task<TEntity?> GetByIdAsync(Guid id);
 
-    Task AddAsync(TEntity entity);
+    Task<bool> AddAsync(TEntity entity);
 
-    Task UpdateAsync(TEntity entity);
+    Task<bool> UpdateAsync(TEntity entity);
 
-    Task DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(Guid id);
 }
