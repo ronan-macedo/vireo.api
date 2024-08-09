@@ -8,7 +8,7 @@ using Vireo.Api.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace Vireo.Api.Infrastructure.Vireo.Api.Infrastructure.Data.Migrations
+namespace Vireo.Api.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot

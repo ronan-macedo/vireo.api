@@ -9,10 +9,10 @@ using Vireo.Api.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace Vireo.Api.Infrastructure.Vireo.Api.Infrastructure.Data.Migrations
+namespace Vireo.Api.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240809003759_InitialCreate")]
+    [Migration("20240809013852_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
