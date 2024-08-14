@@ -9,9 +9,11 @@ public interface IClientService
 
     Task<GetClientResponse?> GetClientByIdAsync(Guid id);
 
-    Task AddClientAsync(CreateClientRequest client);
+    Task<Guid> AddClientAsync(CreateClientRequest client);
 
     Task UpdateClientAsync(UpdateClientRequest client, Guid id);
 
     Task DeleteClientAsync(Guid id);
+
+    Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(string? name, string? lastName, int pageNumber, int pageSize);
 }

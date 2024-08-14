@@ -4,6 +4,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <DocumentationFile>Vireo.Api.Web.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,10 +19,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Vireo.Api.Infrastructure\Vireo.Api.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Validators\" />
     </ItemGroup>
 
 </Project>

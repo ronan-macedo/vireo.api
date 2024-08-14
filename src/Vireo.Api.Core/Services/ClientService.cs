@@ -21,17 +21,18 @@ public class ClientService : IClientService
         _notifier = notifier;
     }
 
-    public async Task AddClientAsync(CreateClientRequest client)
+    public async Task<Guid> AddClientAsync(CreateClientRequest client)
     {
         var entity = client.ToClient();
 
         if (await _clientRepository.AddAsync(entity))
         {
-            return;
+            return entity.Id;
         }
         else
         {
-            _notifier.AddNotification(new Notification("An error occurred while adding the client."));
+            _notifier.AddNotification(new Notification("Um erro ocorreu ao adicionar um novo cliente."));
+            return Guid.Empty;
         }
     }
 
@@ -43,7 +44,7 @@ public class ClientService : IClientService
         }
         else
         {
-            _notifier.AddNotification(new Notification("An error occurred while deleting the client."));
+            _notifier.AddNotification(new Notification("Um erro ocorreu ao deletar um cliente."));
         }
     }
 
@@ -75,7 +76,26 @@ public class ClientService : IClientService
         }
         else
         {
-            _notifier.AddNotification(new Notification("An error occurred while updating the client."));
+            _notifier.AddNotification(new Notification("Um erro ocorreu ao modificar um cliente."));
         }
+    }
+
+    public async Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(
+        string? name,
+        string? lastName,
+        int pageNumber,
+        int pageSize)
+    {
+        PaginatedResult<Client> paginatedResult = await _clientRepository.SearchClientsAsync(
+            name,
+            lastName,
+            pageNumber,
+            pageSize);
+
+        return new PaginatedResult<GetClientResponse>(
+            paginatedResult.Items.Select(client => client.ToGetClientResponse()),
+            paginatedResult.TotalCount,
+            pageSize,
+            pageNumber);
     }
 }

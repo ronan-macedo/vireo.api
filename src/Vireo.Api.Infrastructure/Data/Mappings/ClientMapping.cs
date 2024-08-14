@@ -20,11 +20,11 @@ public class ClientMapping : IEntityTypeConfiguration<Client>
 
         builder.Property(_ => _.Phone)
             .IsRequired()
-            .HasColumnType("varchar(20)");
+            .HasColumnType("varchar(13)");
 
         builder.Property(_ => _.Email)
             .IsRequired()
-            .HasColumnType("varchar(20)");
+            .HasColumnType("varchar(50)");
 
         builder.Property(_ => _.Active)
             .IsRequired();
