@@ -8,4 +8,4 @@ WebApplication app = builder.Build();
 
 app.ConfigureWebApplication();
 
-app.Run();
+await app.RunAsync();

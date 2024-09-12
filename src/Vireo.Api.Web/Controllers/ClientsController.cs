@@ -84,7 +84,7 @@ public class ClientsController : ControllerBase
     {
         try
         {
-            _logger.LogDebug("Starting get client by id: {id}", id);
+            _logger.LogDebug("Starting get client by id: {@Id}", id);
             GetClientResponse? client = await _clientService.GetClientByIdAsync(id);
 
             return client is null ? NotFound(new ErrorResponse(
@@ -118,7 +118,7 @@ public class ClientsController : ControllerBase
     {
         try
         {
-            _logger.LogDebug("Starting create client request with parameters: {request}", request);
+            _logger.LogDebug("Starting create client request with parameters: {@Request}", request);
 
             ValidationResult validate = _createClientRequestValidator.Validate(request);
             if (!validate.IsValid)
@@ -141,7 +141,7 @@ public class ClientsController : ControllerBase
 
             if (client == null)
             {
-                _logger.LogError("Failed to retrieve the newly created client with id: {id}", clientId);
+                _logger.LogError("Failed to retrieve the newly created client with id: {@Id}", clientId);
                 return Problem("Falha ao retornar cliente recém criado.");
             }
 
@@ -176,7 +176,7 @@ public class ClientsController : ControllerBase
     {
         try
         {
-            _logger.LogDebug("Starting update client request with parameters: {request}", request);
+            _logger.LogDebug("Starting update client request with parameters: {@Request}", request);
 
             ValidationResult validate = _updateClientRequestValidator.Validate(request);
             if (!validate.IsValid)
@@ -220,7 +220,7 @@ public class ClientsController : ControllerBase
     {
         try
         {
-            _logger.LogDebug("Starting delete client by id: {id}", id);
+            _logger.LogDebug("Starting delete client by id: {@Id}", id);
 
             await _clientService.DeleteClientAsync(id);
 

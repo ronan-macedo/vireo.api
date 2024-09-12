@@ -1,8 +1,8 @@
 ﻿namespace Vireo.Api.Web.DependencyInjection.Extensions;
 
-public static class WebApplicationExtensions
+internal static class WebApplicationExtensions
 {
-    public static void ConfigureWebApplication(this WebApplication app)
+    internal static void ConfigureWebApplication(this WebApplication app)
     {
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

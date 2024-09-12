@@ -10,7 +10,7 @@ namespace Vireo.Api.Web.DependencyInjection.Extensions;
 
 internal static class ServicesDependenciesHandler
 {
-    public static void AddServicesDependencies(this IServiceCollection services)
+    internal static void AddServicesDependencies(this IServiceCollection services)
     {
         services.AddScoped<IClientService, ClientService>();
         services.AddScoped<INotifier, Notifier>();

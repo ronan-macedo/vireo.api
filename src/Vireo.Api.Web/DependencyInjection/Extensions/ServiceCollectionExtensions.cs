@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Vireo.Api.Web.DependencyInjection.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
+    internal static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Add services to the container.
         services.AddDataDependencies(configuration);

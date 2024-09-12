@@ -42,10 +42,8 @@ public class ClientService : IClientService
         {
             return;
         }
-        else
-        {
-            _notifier.AddNotification(new Notification("Um erro ocorreu ao deletar um cliente."));
-        }
+
+        _notifier.AddNotification(new Notification("Um erro ocorreu ao deletar um cliente."));
     }
 
     public async Task<GetClientResponse?> GetClientByIdAsync(Guid id)
@@ -74,10 +72,8 @@ public class ClientService : IClientService
         {
             return;
         }
-        else
-        {
-            _notifier.AddNotification(new Notification("Um erro ocorreu ao modificar um cliente."));
-        }
+
+        _notifier.AddNotification(new Notification("Um erro ocorreu ao modificar um cliente."));
     }
 
     public async Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(

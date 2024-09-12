@@ -44,11 +44,16 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public void Dispose()
     {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
         if (!_disposedValue)
         {
             Context.Dispose();
-            _disposedValue = true;
+            _disposedValue = disposing;
         }
-        GC.SuppressFinalize(this);
     }
 }
