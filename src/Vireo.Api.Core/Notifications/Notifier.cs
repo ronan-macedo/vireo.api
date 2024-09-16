@@ -2,18 +2,18 @@
 
 namespace Vireo.Api.Core.Notifications;
 
-public class Notifier : INotifier
+public sealed class Notifier : INotifier
 {
-    private List<Notification> _notifications;
+    private List<Notification> Notifications { get; set; }
 
     public Notifier()
     {
-        _notifications = [];
+        Notifications = [];
     }
 
-    public bool HasNotification => _notifications.Count != 0;
+    public bool HasNotification => Notifications.Count != 0;
 
-    public ICollection<Notification> Notifications => _notifications;
+    public ICollection<Notification> GetNotifications => Notifications;
 
-    public void AddNotification(Notification notification) => _notifications.Add(notification);
+    public void AddNotification(Notification notification) => Notifications.Add(notification);
 }

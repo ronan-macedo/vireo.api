@@ -37,7 +37,7 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
 
         if (!string.IsNullOrEmpty(name))
         {
-            query = query.Where(client => client.Name.Contains(name));
+            query = query.Where(client => client.FirstName.Contains(name));
         }
 
         if (!string.IsNullOrEmpty(lastName))
@@ -59,13 +59,12 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
 
     public override async Task<bool> UpdateAsync(Client entity)
     {
-        return await Task.FromResult(
-            DbSet.Where(client => client.Id == entity.Id)
-            .ExecuteUpdate(client =>
-            client.SetProperty(prop => prop.Name, entity.Name)
+        return await DbSet.Where(client => client.Id == entity.Id)
+            .ExecuteUpdateAsync(client =>
+            client.SetProperty(prop => prop.FirstName, entity.FirstName)
                   .SetProperty(prop => prop.LastName, entity.LastName)
                   .SetProperty(prop => prop.Phone, entity.Phone)
                   .SetProperty(prop => prop.Email, entity.Email)
-            ) > 0);
+            ) > 0;
     }
 }

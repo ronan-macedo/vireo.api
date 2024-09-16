@@ -7,30 +7,30 @@ public class CreateClientRequestValidator : AbstractValidator<CreateClientReques
 {
     public CreateClientRequestValidator()
     {
-        RuleFor(_ => _.Name)
+        RuleFor(_ => _.FirstName)
             .NotEmpty()
-            .WithMessage("O campo 'Nome' é obrigatório.")
+            .WithMessage("{PropertyName} is required.")
             .MaximumLength(100)
-            .WithMessage("O campo 'Nome' não pode ser maior do que 100 caracteres.");
+            .WithMessage("{PropertyName} cannot be longer than {MaxLength}.");
 
         RuleFor(_ => _.LastName)
             .NotEmpty()
-            .WithMessage("O campo 'Apelido' é obrigatório.")
+            .WithMessage("{PropertyName} is required.")
             .MaximumLength(100)
-            .WithMessage("O campo 'Apelido' não pode ser maior do que 100 caracteres.");
+            .WithMessage("{PropertyName} cannot be longer than {MaxLength}.");
 
         RuleFor(_ => _.Phone)
             .NotEmpty()
-            .WithMessage("O campo 'Telefone' é obrigatório.")
+            .WithMessage("{PropertyName} is required.")
             .MaximumLength(13)
-            .WithMessage("O campo 'Telefone' não pode ser maior do que 13 caracteres.");
+            .WithMessage("{PropertyName} cannot be longer than {MaxLength}.");
 
         RuleFor(_ => _.Email)
             .NotEmpty()
-            .WithMessage("O campo 'Email' é obrigatório.")
+            .WithMessage("{PropertyName} is required.")
             .MaximumLength(50)
-            .WithMessage("O campo 'Email' não pode ser maior do que 50 caracteres.")
+            .WithMessage("{PropertyName} cannot be longer than {MaxLength}.")
             .EmailAddress()
-            .WithMessage("O campo 'Email' não é um email válido.");
+            .WithMessage("{PropertyName} is not valid.");
     }
 }

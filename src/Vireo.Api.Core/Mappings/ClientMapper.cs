@@ -10,7 +10,7 @@ public static class ClientMapper
     {
         return new GetClientResponse(
             client.Id,
-            client.Name,
+            client.FirstName,
             client.LastName,
             client.Phone,
             client.Email,
@@ -23,7 +23,7 @@ public static class ClientMapper
         return new Client
         {
             Id = id,
-            Name = request.Name,
+            FirstName = request.FirstName,
             LastName = request.LastName,
             Phone = request.Phone,
             Email = request.Email
@@ -34,7 +34,7 @@ public static class ClientMapper
     {
         return new Client
         {
-            Name = request.Name,
+            FirstName = request.FirstName,
             LastName = request.LastName,
             Phone = request.Phone,
             Email = request.Email,

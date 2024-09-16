@@ -5,7 +5,7 @@ using Vireo.Api.Core.Domain.Dtos.Requests;
 using Vireo.Api.Core.Domain.Dtos.Responses;
 using Vireo.Api.Core.Domain.Interfaces;
 using Vireo.Api.Core.Domain.Interfaces.Services;
-using Vireo.Api.Web.Attribute;
+using Vireo.Api.Web.Attributes;
 
 namespace Vireo.Api.Web.Controllers;
 
@@ -48,7 +48,7 @@ public class ClientsController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(PaginatedResult<GetClientResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetClientsAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         try
@@ -60,9 +60,9 @@ public class ClientsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while getting clients.");
+            _logger.LogError(ex, "An error occurred while searching clients.");
 
-            return Problem("Um erro ocorreu ao buscar por clientes.");
+            return Problem("An error occurred while searching clients.");
         }
         finally
         {
@@ -89,14 +89,14 @@ public class ClientsController : ControllerBase
 
             return client is null ? NotFound(new ErrorResponse(
                 "Not found.",
-                ["Cliente não encontrado."]
+                ["Client not found."]
             )) : Ok(client);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while getting client by id.");
 
-            return Problem("Um erro ocorreu ao buscar cliente por id.");
+            return Problem("An error occurred while getting client by id.");
         }
         finally
         {
@@ -134,7 +134,7 @@ public class ClientsController : ControllerBase
             {
                 return BadRequest(new ErrorResponse(
                "Client creation failed",
-               _notifier.Notifications.Select(n => n.Message)));
+               _notifier.GetNotifications.Select(n => n.Message)));
             }
 
             GetClientResponse? client = await _clientService.GetClientByIdAsync(clientId);
@@ -142,7 +142,7 @@ public class ClientsController : ControllerBase
             if (client == null)
             {
                 _logger.LogError("Failed to retrieve the newly created client with id: {@Id}", clientId);
-                return Problem("Falha ao retornar cliente recém criado.");
+                return Problem("Failed to return newly created client.");
             }
 
             return new ObjectResult(client) { StatusCode = StatusCodes.Status201Created };
@@ -151,7 +151,7 @@ public class ClientsController : ControllerBase
         {
             _logger.LogError(ex, "An error occurred while creating client.");
 
-            return Problem("Um erro ocorreu ao adicionar um novo cliente.");
+            return Problem("An error occurred while creating client.");
         }
         finally
         {
@@ -191,14 +191,14 @@ public class ClientsController : ControllerBase
             return _notifier.HasNotification
                 ? BadRequest(new ErrorResponse(
                     "Client update failed.",
-                    _notifier.Notifications.Select(_ => _.Message)))
+                    _notifier.GetNotifications.Select(_ => _.Message)))
                 : NoContent();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while updating client.");
 
-            return Problem("Um erro ocorreu ao modificar um cliente.");
+            return Problem("An error occurred while updating client.");
         }
         finally
         {
@@ -227,14 +227,14 @@ public class ClientsController : ControllerBase
             return _notifier.HasNotification
                 ? BadRequest(new ErrorResponse(
                     "Client delete failed.",
-                    _notifier.Notifications.Select(_ => _.Message)))
+                    _notifier.GetNotifications.Select(_ => _.Message)))
                 : NoContent();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while deleting client.");
 
-            return Problem("Um erro ocorreu ao deletar um cliente.");
+            return Problem("An error occurred while deleting client.");
         }
         finally
         {
@@ -277,7 +277,7 @@ public class ClientsController : ControllerBase
         {
             _logger.LogError(ex, "An error occurred while searching clients.");
 
-            return Problem("Um erro ocorreu ao buscar por clientes.");
+            return Problem("An error occurred while searching clients.");
         }
         finally
         {

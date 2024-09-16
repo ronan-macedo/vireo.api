@@ -1,7 +1,7 @@
 ﻿namespace Vireo.Api.Core.Domain.Dtos.Requests;
 
 public record CreateClientRequest(
-    string Name,
+    string FirstName,
     string LastName,
     string Phone,
     string Email);

@@ -31,7 +31,7 @@ public class ClientService : IClientService
         }
         else
         {
-            _notifier.AddNotification(new Notification("Um erro ocorreu ao adicionar um novo cliente."));
+            _notifier.AddNotification(new Notification("An error occurred while adding a client."));
             return Guid.Empty;
         }
     }
@@ -43,7 +43,7 @@ public class ClientService : IClientService
             return;
         }
 
-        _notifier.AddNotification(new Notification("Um erro ocorreu ao deletar um cliente."));
+        _notifier.AddNotification(new Notification("An error occurred while deleting a client."));
     }
 
     public async Task<GetClientResponse?> GetClientByIdAsync(Guid id)
@@ -73,7 +73,7 @@ public class ClientService : IClientService
             return;
         }
 
-        _notifier.AddNotification(new Notification("Um erro ocorreu ao modificar um cliente."));
+        _notifier.AddNotification(new Notification("An error occurred while updating a client."));
     }
 
     public async Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(

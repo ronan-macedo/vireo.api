@@ -10,7 +10,7 @@ public class ClientMapping : IEntityTypeConfiguration<Client>
     {
         builder.HasKey(_ => _.Id);
 
-        builder.Property(_ => _.Name)
+        builder.Property(_ => _.FirstName)
             .IsRequired()
             .HasColumnType("varchar(100)");
 

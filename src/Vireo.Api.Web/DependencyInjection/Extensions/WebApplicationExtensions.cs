@@ -7,8 +7,9 @@ internal static class WebApplicationExtensions
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
+            app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vireo API v1"));
         }
 
         app.UseHttpsRedirection();
@@ -16,5 +17,7 @@ internal static class WebApplicationExtensions
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.MapHealthChecks("/health");
     }
 }

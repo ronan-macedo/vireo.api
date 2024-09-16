@@ -6,7 +6,7 @@ public interface INotifier
 {
     bool HasNotification { get; }
 
-    ICollection<Notification> Notifications { get; }
+    ICollection<Notification> GetNotifications { get; }
 
     void AddNotification(Notification notification);
 }
