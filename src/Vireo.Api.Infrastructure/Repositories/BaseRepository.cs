@@ -21,7 +21,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public virtual async Task<TEntity?> GetByIdAsync(Guid id)
     {
-        return await DbSet.FindAsync(id);
+        return await DbSet.AsNoTracking().FirstAsync(_ => _.Id == id);
     }
 
     public virtual async Task<bool> AddAsync(TEntity entity)

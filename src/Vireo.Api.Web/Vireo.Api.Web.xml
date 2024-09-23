@@ -4,12 +4,11 @@
         <name>Vireo.Api.Web</name>
     </assembly>
     <members>
-        <member name="M:Vireo.Api.Web.Controllers.ClientsController.GetClientsAsync(System.Int32,System.Int32)">
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.GetClientsAsync(Vireo.Api.Core.Domain.Dtos.Requests.PaginatedRequest)">
             <summary>
             Retrieves a paginated list of clients.
             </summary>
-            <param name="pageNumber">The page number to retrieve.</param>
-            <param name="pageSize">The number of clients per page.</param>
+            <param name="request">The object with the paging parameters.</param>
             <returns>A paginated list of clients.</returns>
         </member>
         <member name="M:Vireo.Api.Web.Controllers.ClientsController.GetClientByIdAsync(System.Guid)">
@@ -18,6 +17,13 @@
             </summary>
             <param name="id">The ID of the client to retrieve.</param>
             <returns>The client with the specified ID.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.SearchClientsAsync(Vireo.Api.Core.Domain.Dtos.Requests.SearchClientRequest)">
+            <summary>
+            Searches for clients based on the provided criteria.
+            </summary>
+            <param name="request">The object with the client query.</param>
+            <returns>A paginated list of clients matching the search criteria.</returns>
         </member>
         <member name="M:Vireo.Api.Web.Controllers.ClientsController.CreateClientAsync(Vireo.Api.Core.Domain.Dtos.Requests.CreateClientRequest)">
             <summary>
@@ -40,16 +46,6 @@
             </summary>
             <param name="id">The ID of the client to delete.</param>
             <returns>The result of the client deletion.</returns>
-        </member>
-        <member name="M:Vireo.Api.Web.Controllers.ClientsController.SearchClientsAsync(System.String,System.String,System.Int32,System.Int32)">
-            <summary>
-            Searches for clients based on the provided criteria.
-            </summary>
-            <param name="name">The name of the client to search for.</param>
-            <param name="lastName">The last name of the client to search for.</param>
-            <param name="pageNumber">The page number to retrieve.</param>
-            <param name="pageSize">The number of clients per page.</param>
-            <returns>A paginated list of clients matching the search criteria.</returns>
         </member>
     </members>
 </doc>

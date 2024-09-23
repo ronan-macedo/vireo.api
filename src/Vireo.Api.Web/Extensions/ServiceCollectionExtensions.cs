@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using Vireo.Api.Infrastructure.Data.Context;
+using Vireo.Api.Web.DependencyInjection;
 
-namespace Vireo.Api.Web.DependencyInjection.Extensions;
+namespace Vireo.Api.Web.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
@@ -14,6 +13,8 @@ internal static class ServiceCollectionExtensions
         services.AddDataDependencies(configuration);
         services.AddServicesDependencies();
         services.AddControllers();
+        services.AddCorsDependencies(configuration);
+        services.AddAuthenticationDependencies(configuration);
         services.ConfigureHttpJsonOptions(options => options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
         // Add health checks
@@ -37,6 +38,29 @@ internal static class ServiceCollectionExtensions
             }
 
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "Vireo API", Version = "v1" });
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "Enter the JWT in the following format: Bearer <token>",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+            });
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
     }
 }

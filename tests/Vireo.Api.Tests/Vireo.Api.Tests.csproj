@@ -36,9 +36,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Core\" />
-    <Folder Include="Web\" />
+    <Folder Include="Core\Mappings\" />
+    <Folder Include="Core\Services\" />
+    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>

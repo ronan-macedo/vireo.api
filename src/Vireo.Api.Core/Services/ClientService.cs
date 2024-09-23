@@ -55,15 +55,15 @@ public class ClientService : IClientService
         };
     }
 
-    public async Task<PaginatedResult<GetClientResponse>> GetClientsAsync(int pageNumber, int pageSize)
+    public async Task<PaginatedResult<GetClientResponse>> GetClientsAsync(PaginatedRequest paginatedRequest)
     {
-        PaginatedResult<Client> paginatedResult = await _clientRepository.GetClientsAsync(pageNumber, pageSize);
+        PaginatedResult<Client> paginatedResult = await _clientRepository.GetClientsAsync(paginatedRequest.PageNumber, paginatedRequest.PageSize);
 
         return new PaginatedResult<GetClientResponse>(
             paginatedResult.Items.Select(client => client.ToGetClientResponse()),
             paginatedResult.TotalCount,
-            pageSize,
-            pageNumber);
+            paginatedRequest.PageSize,
+            paginatedRequest.PageNumber);
     }
 
     public async Task UpdateClientAsync(UpdateClientRequest client, Guid id)
@@ -76,22 +76,18 @@ public class ClientService : IClientService
         _notifier.AddNotification(new Notification("An error occurred while updating a client."));
     }
 
-    public async Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(
-        string? name,
-        string? lastName,
-        int pageNumber,
-        int pageSize)
+    public async Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(SearchClientRequest searchClientRequest)
     {
         PaginatedResult<Client> paginatedResult = await _clientRepository.SearchClientsAsync(
-            name,
-            lastName,
-            pageNumber,
-            pageSize);
+            searchClientRequest.FirstName,
+            searchClientRequest.LastName,
+            searchClientRequest.PageNumber,
+            searchClientRequest.PageSize);
 
         return new PaginatedResult<GetClientResponse>(
             paginatedResult.Items.Select(client => client.ToGetClientResponse()),
             paginatedResult.TotalCount,
-            pageSize,
-            pageNumber);
+            searchClientRequest.PageSize,
+            searchClientRequest.PageNumber);
     }
 }

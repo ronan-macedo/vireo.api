@@ -12,7 +12,7 @@ public sealed class GuidNotEmptyAttribute : ValidationAttribute
         {
             var errorMessage = new ErrorResponse(
                 "Validation failed",
-                ["The value should not be null or 00000000-0000-0000-0000-000000000000"]
+                ["The value should not be null or 00000000-0000-0000-0000-000000000000."]
             );
 
             return new ValidationResult(errorMessage.Message);

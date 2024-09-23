@@ -7,8 +7,8 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=2MV4NeSfKwIP9b2JtzBRpg==
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=vireo_db;Username=vireo;Password=vireo_password
     ports:
-      - "8081:80"
-      - "8082:443" 
+      - "7100:80"
+      - "7200:443" 
     volumes:
       - ~/.aspnet/https:/https:ro
   postgres:

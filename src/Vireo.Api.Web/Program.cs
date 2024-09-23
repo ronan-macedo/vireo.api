@@ -1,4 +1,4 @@
-using Vireo.Api.Web.DependencyInjection.Extensions;
+using Vireo.Api.Web.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

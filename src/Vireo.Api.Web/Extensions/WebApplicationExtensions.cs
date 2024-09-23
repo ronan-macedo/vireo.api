@@ -1,4 +1,6 @@
-﻿namespace Vireo.Api.Web.DependencyInjection.Extensions;
+﻿using Vireo.Api.Web.Middleware;
+
+namespace Vireo.Api.Web.Extensions;
 
 internal static class WebApplicationExtensions
 {
@@ -14,9 +16,14 @@ internal static class WebApplicationExtensions
 
         app.UseHttpsRedirection();
 
+        app.UseMiddleware<UnauthorizedHandlerMiddleware>();
+        app.UseMiddleware<SecureHeadersMiddleware>();
+
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
+        app.UseCors();
 
         app.MapHealthChecks("/health");
     }

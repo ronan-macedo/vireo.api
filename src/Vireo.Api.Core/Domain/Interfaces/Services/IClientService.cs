@@ -5,7 +5,7 @@ namespace Vireo.Api.Core.Domain.Interfaces.Services;
 
 public interface IClientService
 {
-    Task<PaginatedResult<GetClientResponse>> GetClientsAsync(int pageNumber, int pageSize);
+    Task<PaginatedResult<GetClientResponse>> GetClientsAsync(PaginatedRequest paginatedRequest);
 
     Task<GetClientResponse?> GetClientByIdAsync(Guid id);
 
@@ -15,5 +15,5 @@ public interface IClientService
 
     Task DeleteClientAsync(Guid id);
 
-    Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(string? name, string? lastName, int pageNumber, int pageSize);
+    Task<PaginatedResult<GetClientResponse>> SearchClientsAsync(SearchClientRequest searchClientRequest);
 }
