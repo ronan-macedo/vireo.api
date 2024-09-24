@@ -5,13 +5,13 @@ using Vireo.Api.Web.Validators;
 namespace Vireo.Api.Tests.Web.Validators;
 
 [Trait(TestTraits.UnitTest, TestTraits.ValidatorTest)]
-public class CreateClientRequestValidatorTests
+public class UpdateClientRequestValidatorTests
 {
-    private readonly CreateClientRequestValidator _validator;
+    private readonly UpdateClientRequestValidator _sut;
 
-    public CreateClientRequestValidatorTests()
+    public UpdateClientRequestValidatorTests()
     {
-        _validator = new CreateClientRequestValidator();
+        _sut = new UpdateClientRequestValidator();
     }
 
     [Theory]
@@ -20,17 +20,17 @@ public class CreateClientRequestValidatorTests
     [InlineData("John", "Doe", "", "john.doe@example.com")]
     [InlineData("John", "Doe", "1234567890", "")]
     [InlineData("John", "Doe", "1234567890", "invalid-email")]
-    public void CreateClientRequestValidator_ShouldHaveError_WhenInvalidParameters(
+    public void UpdateClientRequestValidator_ShouldHaveError_WhenInvalidParameters(
         string firstName,
         string lastName,
         string phone,
         string email)
     {
         // Arrange
-        var request = new CreateClientRequest(firstName, lastName, phone, email);
+        var request = new UpdateClientRequest(firstName, lastName, phone, email);
 
         // Act
-        ValidationResult result = _validator.Validate(request);
+        ValidationResult result = _sut.Validate(request);
 
         // Assert
         Assert.False(result.IsValid);
@@ -38,13 +38,13 @@ public class CreateClientRequestValidatorTests
     }
 
     [Fact]
-    public void CreateClientRequestValidator_ShouldNotHaveError_WhenRequestIsValid()
+    public void UpdateClientRequestValidator_ShouldNotHaveError_WhenRequestIsValid()
     {
         // Arrange
-        var request = new CreateClientRequest("John", "Doe", "1234567890", "john.doe@example.com");
+        var request = new UpdateClientRequest("John", "Doe", "1234567890", "john.doe@example.com");
 
         // Act
-        ValidationResult result = _validator.Validate(request);
+        ValidationResult result = _sut.Validate(request);
 
         // Assert
         Assert.True(result.IsValid);

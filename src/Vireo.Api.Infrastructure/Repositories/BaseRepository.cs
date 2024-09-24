@@ -32,14 +32,29 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public virtual async Task<bool> UpdateAsync(TEntity entity)
     {
-        DbSet.Update(entity);
-        return await Context.SaveChangesAsync() > 0;
+        TEntity? existingEntity = await DbSet.AsNoTracking().FirstOrDefaultAsync(c => c.Id == entity.Id);
+        if (existingEntity == null)
+        {
+            return false;
+        }
+        existingEntity = entity;
+
+        DbSet.Update(existingEntity);
+        await Context.SaveChangesAsync();
+        return true;
     }
 
     public virtual async Task<bool> DeleteAsync(Guid id)
     {
-        DbSet.Remove(new TEntity { Id = id });
-        return await Context.SaveChangesAsync() > 0;
+        TEntity? existingEntity = await DbSet.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+        if (existingEntity == null)
+        {
+            return false;
+        }
+
+        DbSet.Remove(existingEntity);
+        await Context.SaveChangesAsync();
+        return true;
     }
 
     public void Dispose()

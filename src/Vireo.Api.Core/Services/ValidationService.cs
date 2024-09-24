@@ -27,7 +27,7 @@ public class ValidationService : IValidationService
 
         if (!validationResult.IsValid)
         {
-            GetErrorResponse = new ErrorResponse("Validation failed", validationResult.Errors.Select(x => x.ErrorMessage));
+            GetErrorResponse = new ErrorResponse("Validation failed", validationResult.Errors.Select(r => r.ErrorMessage));
         }
     }
 }

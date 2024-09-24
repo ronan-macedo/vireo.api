@@ -25,9 +25,7 @@ public class ClientsControllerTests
 
     private readonly ILogger<ClientsController> _logger = Substitute.For<ILogger<ClientsController>>();
 
-    private readonly IValidator<CreateClientRequest> _createClientRequestValidator = Substitute.For<IValidator<CreateClientRequest>>();
-
-    private readonly IValidator<UpdateClientRequest> _updateClientRequestValidator = Substitute.For<IValidator<UpdateClientRequest>>();
+    private readonly IValidationService _validationService = Substitute.For<IValidationService>();
 
     private readonly IFixture _fixture = new Fixture();
 
@@ -39,8 +37,7 @@ public class ClientsControllerTests
             _clientService,
             _notifier,
             _logger,
-            _updateClientRequestValidator,
-            _createClientRequestValidator);
+            _validationService);
     }
 
     #region GetClientsAsync
@@ -49,11 +46,12 @@ public class ClientsControllerTests
     public async Task GetClientsAsync_ReturnsOkResult_WithClients()
     {
         // Arrange
+        var request = new PaginatedRequest(1, 10);
         PaginatedResult<GetClientResponse> clients = _fixture.Create<PaginatedResult<GetClientResponse>>();
-        _clientService.GetClientsAsync(Arg.Any<int>(), Arg.Any<int>()).Returns(clients);
+        _clientService.GetClientsAsync(Arg.Any<PaginatedRequest>()).Returns(clients);
 
         // Act
-        IActionResult result = await _sut.GetClientsAsync(1, 10);
+        IActionResult result = await _sut.GetClientsAsync(request);
 
         // Assert
         OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
@@ -65,11 +63,12 @@ public class ClientsControllerTests
     public async Task GetClientsAsync_ReturnsOkResult_WithoutClients()
     {
         // Arrange
+        var request = new PaginatedRequest(1, 10);
         var clients = new PaginatedResult<GetClientResponse>([], 0, 1, 1);
-        _clientService.GetClientsAsync(Arg.Any<int>(), Arg.Any<int>()).Returns(clients);
+        _clientService.GetClientsAsync(Arg.Any<PaginatedRequest>()).Returns(clients);
 
         // Act
-        IActionResult result = await _sut.GetClientsAsync(1, 10);
+        IActionResult result = await _sut.GetClientsAsync(request);
 
         // Assert
         OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
@@ -81,10 +80,11 @@ public class ClientsControllerTests
     public async Task GetClientsAsync_ThrowsException_WhenServiceFails()
     {
         // Arrange
-        _clientService.GetClientsAsync(Arg.Any<int>(), Arg.Any<int>()).Throws(new Exception("Exception test."));
+        var request = new PaginatedRequest(1, 10);
+        _clientService.GetClientsAsync(Arg.Any<PaginatedRequest>()).Throws(new Exception("Exception test."));
 
         // Act
-        IActionResult result = await _sut.GetClientsAsync(1, 10);
+        IActionResult result = await _sut.GetClientsAsync(request);
 
         // Assert
         ObjectResult objectResult = Assert.IsType<ObjectResult>(result);
@@ -153,8 +153,7 @@ public class ClientsControllerTests
         var clientId = Guid.NewGuid();
         CreateClientRequest request = _fixture.Create<CreateClientRequest>();
         var response = request.ToGetClientResponse(clientId);
-        var validationResult = new ValidationResult();
-        _createClientRequestValidator.Validate(Arg.Any<CreateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _clientService.AddClientAsync(Arg.Any<CreateClientRequest>()).Returns(clientId);
         _clientService.GetClientByIdAsync(Arg.Any<Guid>()).Returns(response);
 
@@ -162,9 +161,9 @@ public class ClientsControllerTests
         IActionResult result = await _sut.CreateClientAsync(request);
 
         // Assert
-        ObjectResult objectResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(StatusCodes.Status201Created, objectResult.StatusCode);
-        Assert.Equal(response, objectResult.Value);
+        CreatedResult createdResult = Assert.IsType<CreatedResult>(result);
+        Assert.Equal(StatusCodes.Status201Created, createdResult.StatusCode);
+        Assert.Equal(response, createdResult.Value);
     }
 
     [Fact]
@@ -172,8 +171,8 @@ public class ClientsControllerTests
     {
         // Arrange
         CreateClientRequest request = _fixture.Create<CreateClientRequest>();
-        ValidationResult validationResult = _fixture.Create<ValidationResult>();
-        _createClientRequestValidator.Validate(Arg.Any<CreateClientRequest>()).Returns(validationResult);
+        ErrorResponse errorResponse = _fixture.Create<ErrorResponse>();
+        _validationService.GetErrorResponse.Returns(errorResponse);
 
         // Act
         IActionResult result = await _sut.CreateClientAsync(request);
@@ -188,8 +187,7 @@ public class ClientsControllerTests
     {
         // Arrange
         CreateClientRequest request = _fixture.Create<CreateClientRequest>();
-        var validationResult = new ValidationResult();
-        _createClientRequestValidator.Validate(Arg.Any<CreateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _notifier.HasNotification.Returns(true);
         _notifier.GetNotifications.Returns(_fixture.Create<ICollection<Notification>>());
 
@@ -206,8 +204,7 @@ public class ClientsControllerTests
     {
         // Arrange
         CreateClientRequest request = _fixture.Create<CreateClientRequest>();
-        var validationResult = new ValidationResult();
-        _createClientRequestValidator.Validate(Arg.Any<CreateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _clientService.GetClientByIdAsync(Arg.Any<Guid>()).Returns((GetClientResponse?)null);
 
         // Act
@@ -223,8 +220,7 @@ public class ClientsControllerTests
     {
         // Arrange
         CreateClientRequest request = _fixture.Create<CreateClientRequest>();
-        var validationResult = new ValidationResult();
-        _createClientRequestValidator.Validate(Arg.Any<CreateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _clientService.AddClientAsync(Arg.Any<CreateClientRequest>()).Throws(new Exception("Exception test."));
 
         // Act
@@ -245,8 +241,7 @@ public class ClientsControllerTests
         // Arrange
         var clientId = Guid.NewGuid();
         UpdateClientRequest request = _fixture.Create<UpdateClientRequest>();
-        var validationResult = new ValidationResult();
-        _updateClientRequestValidator.Validate(Arg.Any<UpdateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _notifier.HasNotification.Returns(false);
 
         // Act
@@ -263,8 +258,9 @@ public class ClientsControllerTests
         // Arrange
         var clientId = Guid.NewGuid();
         UpdateClientRequest request = _fixture.Create<UpdateClientRequest>();
-        ValidationResult validationResult = _fixture.Create<ValidationResult>();
-        _updateClientRequestValidator.Validate(Arg.Any<UpdateClientRequest>()).Returns(validationResult);
+        ErrorResponse errorResponse = _fixture.Create<ErrorResponse>();
+        _validationService.IsValid.Returns(false);
+        _validationService.GetErrorResponse.Returns(errorResponse);
 
         // Act
         IActionResult result = await _sut.UpdateClientAsync(clientId, request);
@@ -280,8 +276,7 @@ public class ClientsControllerTests
         // Arrange
         var clientId = Guid.NewGuid();
         UpdateClientRequest request = _fixture.Create<UpdateClientRequest>();
-        var validationResult = new ValidationResult();
-        _updateClientRequestValidator.Validate(Arg.Any<UpdateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _notifier.HasNotification.Returns(true);
         _notifier.GetNotifications.Returns(_fixture.Create<ICollection<Notification>>());
 
@@ -299,8 +294,7 @@ public class ClientsControllerTests
         // Arrange
         var clientId = Guid.NewGuid();
         UpdateClientRequest request = _fixture.Create<UpdateClientRequest>();
-        var validationResult = new ValidationResult();
-        _updateClientRequestValidator.Validate(Arg.Any<UpdateClientRequest>()).Returns(validationResult);
+        _validationService.IsValid.Returns(true);
         _clientService.UpdateClientAsync(Arg.Any<UpdateClientRequest>(), Arg.Any<Guid>()).Throws(new Exception("Exception test."));
 
         // Act
@@ -369,15 +363,12 @@ public class ClientsControllerTests
     {
         // Arrange
         PaginatedResult<GetClientResponse> clients = _fixture.Create<PaginatedResult<GetClientResponse>>();
-        _clientService.SearchClientsAsync(
-            Arg.Any<string>(),
-            Arg.Any<string>(),
-            Arg.Any<int>(),
-            Arg.Any<int>())
+        SearchClientRequest request = _fixture.Create<SearchClientRequest>();
+        _clientService.SearchClientsAsync(Arg.Any<SearchClientRequest>())
             .Returns(clients);
 
         // Act
-        IActionResult result = await _sut.SearchClientsAsync("John", "Doe", 1, 10);
+        IActionResult result = await _sut.SearchClientsAsync(request);
 
         // Assert
         OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
@@ -390,15 +381,12 @@ public class ClientsControllerTests
     {
         // Arrange
         var clients = new PaginatedResult<GetClientResponse>([], 0, 1, 1);
-        _clientService.SearchClientsAsync(
-            Arg.Any<string>(),
-            Arg.Any<string>(),
-            Arg.Any<int>(),
-            Arg.Any<int>())
+        SearchClientRequest request = _fixture.Create<SearchClientRequest>();
+        _clientService.SearchClientsAsync(Arg.Any<SearchClientRequest>())
             .Returns(clients);
 
         // Act
-        IActionResult result = await _sut.SearchClientsAsync("John", "Doe", 1, 10);
+        IActionResult result = await _sut.SearchClientsAsync(request);
 
         // Assert
         OkObjectResult okResult = Assert.IsType<OkObjectResult>(result);
@@ -410,15 +398,12 @@ public class ClientsControllerTests
     public async Task SearchClientsAsync_ThrowsException_WhenServiceFails()
     {
         // Arrange
-        _clientService.SearchClientsAsync(
-            Arg.Any<string>(),
-            Arg.Any<string>(),
-            Arg.Any<int>(),
-            Arg.Any<int>())
+        SearchClientRequest request = _fixture.Create<SearchClientRequest>();
+        _clientService.SearchClientsAsync(Arg.Any<SearchClientRequest>())
             .Throws(new Exception("Exception test."));
 
         // Act
-        IActionResult result = await _sut.SearchClientsAsync("John", "Doe", 1, 10);
+        IActionResult result = await _sut.SearchClientsAsync(request);
 
         // Assert
         ObjectResult objectResult = Assert.IsType<ObjectResult>(result);

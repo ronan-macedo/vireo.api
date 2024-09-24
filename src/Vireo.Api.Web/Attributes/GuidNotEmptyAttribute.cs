@@ -3,7 +3,7 @@ using Vireo.Api.Core.Domain.Dtos.Responses;
 
 namespace Vireo.Api.Web.Attributes;
 
-[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
 public sealed class GuidNotEmptyAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
