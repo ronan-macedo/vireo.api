@@ -4,11 +4,11 @@ using Vireo.Api.Core.Domain.Entities;
 
 namespace Vireo.Api.Infrastructure.Data.Context;
 
-public class ApplicationContext : DbContext
+public class ApplicationDbContext : DbContext
 {
     public DbSet<Client> Clients { get; set; }
 
-    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         ChangeTracker.AutoDetectChangesEnabled = false;
@@ -16,7 +16,7 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         foreach (IMutableForeignKey? relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;

@@ -8,7 +8,7 @@ namespace Vireo.Api.Infrastructure.Repositories;
 
 public class ClientRepository : BaseRepository<Client>, IClientRepository
 {
-    public ClientRepository(ApplicationContext context) : base(context)
+    public ClientRepository(ApplicationDbContext context) : base(context)
     {
     }
 
@@ -73,7 +73,7 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         existingClient.Email = entity.Email;
 
         DbSet.Update(existingClient);
-        await Context.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         return true;
     }
 }

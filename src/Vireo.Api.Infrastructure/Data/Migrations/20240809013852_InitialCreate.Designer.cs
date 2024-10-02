@@ -11,7 +11,7 @@ using Vireo.Api.Infrastructure.Data.Context;
 
 namespace Vireo.Api.Infrastructure.Data.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240809013852_InitialCreate")]
     partial class InitialCreate
     {

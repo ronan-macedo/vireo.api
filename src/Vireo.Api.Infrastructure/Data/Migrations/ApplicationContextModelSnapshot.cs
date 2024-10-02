@@ -10,7 +10,7 @@ using Vireo.Api.Infrastructure.Data.Context;
 
 namespace Vireo.Api.Infrastructure.Data.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

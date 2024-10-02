@@ -15,4 +15,6 @@ internal static class TestTraits
     public const string MappingTest = "MappingTest";
 
     public const string NotifierTest = "NotifierTest";
+
+    public const string IntegrationTest = "IntegrationTest";
 }

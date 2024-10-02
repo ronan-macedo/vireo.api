@@ -14,12 +14,12 @@ internal static class DataDependency
         {
             throw new InvalidOperationException("Connection string not found.");
         }
-        services.AddDbContext<ApplicationContext>(options =>
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
         });
 
-        services.AddScoped<ApplicationContext>();
+        services.AddScoped<ApplicationDbContext>();
         services.AddScoped<IClientRepository, ClientRepository>();
     }
 }

@@ -33,7 +33,7 @@ public class ClientMapperTests
     public void ToClient_FromUpdateClientRequest_ShouldMapCorrectly()
     {
         // Arrange
-        var request = _fixture.Create<UpdateClientRequest>();
+        UpdateClientRequest request = _fixture.Create<UpdateClientRequest>();
         var id = Guid.NewGuid();
 
         // Act
@@ -51,7 +51,7 @@ public class ClientMapperTests
     public void ToClient_FromCreateClientRequest_ShouldMapCorrectly()
     {
         // Arrange
-        var request = _fixture.Create<CreateClientRequest>();
+        CreateClientRequest request = _fixture.Create<CreateClientRequest>();
 
         // Act
         var client = request.ToClient();

@@ -22,8 +22,8 @@ public class CreateClientRequestValidator : AbstractValidator<CreateClientReques
         RuleFor(_ => _.Phone)
             .NotEmpty()
             .WithMessage("{PropertyName} is required.")
-            .MaximumLength(13)
-            .WithMessage("{PropertyName} cannot be longer than {MaxLength}.");
+            .Matches(@"^\d{9,13}$")
+            .WithMessage("{PropertyName} must be between 9 and 13 digits.");
 
         RuleFor(_ => _.Email)
             .NotEmpty()

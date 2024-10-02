@@ -7,27 +7,27 @@ namespace Vireo.Api.Infrastructure.Repositories;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity, new()
 {
-    protected readonly ApplicationContext Context;
+    protected readonly ApplicationDbContext DbContext;
 
     protected readonly DbSet<TEntity> DbSet;
 
     private bool _disposedValue;
 
-    protected BaseRepository(ApplicationContext context)
+    protected BaseRepository(ApplicationDbContext context)
     {
-        Context = context;
+        DbContext = context;
         DbSet = context.Set<TEntity>();
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(Guid id)
     {
-        return await DbSet.AsNoTracking().FirstAsync(_ => _.Id == id);
+        return await DbSet.FindAsync(id);
     }
 
     public virtual async Task<bool> AddAsync(TEntity entity)
     {
         DbSet.Add(entity);
-        return await Context.SaveChangesAsync() > 0;
+        return await DbContext.SaveChangesAsync() > 0;
     }
 
     public virtual async Task<bool> UpdateAsync(TEntity entity)
@@ -40,7 +40,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         existingEntity = entity;
 
         DbSet.Update(existingEntity);
-        await Context.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         return true;
     }
 
@@ -53,7 +53,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         }
 
         DbSet.Remove(existingEntity);
-        await Context.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         return true;
     }
 
@@ -67,7 +67,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     {
         if (!_disposedValue)
         {
-            Context.Dispose();
+            DbContext.Dispose();
             _disposedValue = disposing;
         }
     }

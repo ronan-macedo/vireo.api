@@ -7,14 +7,14 @@ public class DatabaseFixture : IDisposable
 {
     private bool disposedValue;
 
-    public ApplicationContext Context { get; private set; }
+    public ApplicationDbContext DbContext { get; private set; }
 
     public DatabaseFixture()
     {
-        DbContextOptions<ApplicationContext> options = new DbContextOptionsBuilder<ApplicationContext>()
+        DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        Context = new ApplicationContext(options);
+        DbContext = new ApplicationDbContext(options);
     }
 
     protected virtual void Dispose(bool disposing)
@@ -23,8 +23,8 @@ public class DatabaseFixture : IDisposable
         {
             if (disposing)
             {
-                Context.Database.EnsureDeleted();
-                Context.Dispose();
+                DbContext.Database.EnsureDeleted();
+                DbContext.Dispose();
             }
 
             disposedValue = true;

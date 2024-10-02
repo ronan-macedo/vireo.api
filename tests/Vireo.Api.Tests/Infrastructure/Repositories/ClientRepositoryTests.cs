@@ -19,9 +19,9 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     public ClientRepositoryTests(DatabaseFixture databaseFixture)
     {
         _dataFixture = databaseFixture;
-        _dataFixture.Context.Database.EnsureDeleted();
-        _dataFixture.Context.Database.EnsureCreated();
-        _sut = new ClientRepository(_dataFixture.Context);
+        _dataFixture.DbContext.Database.EnsureDeleted();
+        _dataFixture.DbContext.Database.EnsureCreated();
+        _sut = new ClientRepository(_dataFixture.DbContext);
     }
 
     #region AddAsync
@@ -48,8 +48,8 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     {
         // Arrange
         var clients = _fixture.CreateMany<Client>(10).ToList();
-        await _dataFixture.Context.Clients.AddRangeAsync(clients);
-        await _dataFixture.Context.SaveChangesAsync();
+        await _dataFixture.DbContext.Clients.AddRangeAsync(clients);
+        await _dataFixture.DbContext.SaveChangesAsync();
 
         // Act
         PaginatedResult<Client> result = await _sut.GetClientsAsync(1, 10);
@@ -67,8 +67,8 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     {
         // Arrange
         Client client = _fixture.Create<Client>();
-        await _dataFixture.Context.Clients.AddAsync(client);
-        await _dataFixture.Context.SaveChangesAsync();
+        await _dataFixture.DbContext.Clients.AddAsync(client);
+        await _dataFixture.DbContext.SaveChangesAsync();
 
         // Act
         Client? result = await _sut.GetByIdAsync(client.Id);
@@ -86,8 +86,8 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     {
         // Arrange
         var clients = _fixture.CreateMany<Client>().ToList();
-        await _dataFixture.Context.Clients.AddRangeAsync(clients);
-        await _dataFixture.Context.SaveChangesAsync();
+        await _dataFixture.DbContext.Clients.AddRangeAsync(clients);
+        await _dataFixture.DbContext.SaveChangesAsync();
         Client client = clients[0];
 
         // Act
@@ -111,9 +111,9 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     {
         // Arrange
         Client client = _fixture.Create<Client>();
-        await _dataFixture.Context.Clients.AddAsync(client);
-        await _dataFixture.Context.SaveChangesAsync();
-        _dataFixture.Context.Entry(client).State = EntityState.Detached;
+        await _dataFixture.DbContext.Clients.AddAsync(client);
+        await _dataFixture.DbContext.SaveChangesAsync();
+        _dataFixture.DbContext.Entry(client).State = EntityState.Detached;
 
         // Act
         client.FirstName = _fixture.Create<string>();
@@ -145,9 +145,9 @@ public class ClientRepositoryTests : IClassFixture<DatabaseFixture>
     {
         // Arrange
         Client client = _fixture.Create<Client>();
-        await _dataFixture.Context.Clients.AddAsync(client);
-        await _dataFixture.Context.SaveChangesAsync();
-        _dataFixture.Context.Entry(client).State = EntityState.Detached;
+        await _dataFixture.DbContext.Clients.AddAsync(client);
+        await _dataFixture.DbContext.SaveChangesAsync();
+        _dataFixture.DbContext.Entry(client).State = EntityState.Detached;
 
         // Act
         bool result = await _sut.DeleteAsync(client.Id);
