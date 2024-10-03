@@ -16,9 +16,9 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
         int totalCount = await DbSet.AsNoTracking().CountAsync();
         List<Client> clients = await DbSet.AsNoTracking()
+            .OrderBy(client => client.LastServiceDate)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .OrderBy(client => client.LastServiceDate)
             .ToListAsync();
 
         return new PaginatedResult<Client>(
@@ -34,7 +34,9 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         int pageNumber,
         int pageSize)
     {
-        IQueryable<Client> query = DbSet.AsNoTracking();
+        IQueryable<Client> query = DbSet
+            .AsNoTracking()
+            .OrderBy(client => client.LastServiceDate);
 
         if (!string.IsNullOrEmpty(name))
         {
@@ -49,7 +51,6 @@ public class ClientRepository : BaseRepository<Client>, IClientRepository
         int totalCount = await query.CountAsync();
         List<Client> clients = await query.Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .OrderBy(client => client.LastServiceDate)
             .ToListAsync();
 
         return new PaginatedResult<Client>(
