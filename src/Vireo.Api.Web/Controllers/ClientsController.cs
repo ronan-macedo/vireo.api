@@ -42,7 +42,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Request}", nameof(GetClientsAsync), request);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Request}", nameof(GetClientsAsync), request);
             PaginatedResult<GetClientResponse> clients = await _clientService.GetClientsAsync(request);
 
             return Ok(clients);
@@ -54,7 +54,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(GetClientsAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(GetClientsAsync));
         }
     }
 
@@ -72,7 +72,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Id}", nameof(GetClientByIdAsync), id);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Id}", nameof(GetClientByIdAsync), id);
             GetClientResponse? client = await _clientService.GetClientByIdAsync(id);
 
             return client is null ? NotFound(nameof(Client)) : Ok(client);
@@ -84,7 +84,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(GetClientByIdAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(GetClientByIdAsync));
         }
     }
 
@@ -102,7 +102,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Request}", nameof(SearchClientsAsync), request);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Request}", nameof(SearchClientsAsync), request);
 
             PaginatedResult<GetClientResponse> clients = await _clientService.SearchClientsAsync(request);
 
@@ -115,7 +115,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(SearchClientsAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(SearchClientsAsync));
         }
     }
 
@@ -133,7 +133,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Request}", nameof(CreateClientAsync), request);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Request}", nameof(CreateClientAsync), request);
 
             _validationService.Validate(request);
             if (!_validationService.IsValid)
@@ -165,7 +165,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(CreateClientAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(CreateClientAsync));
         }
     }
 
@@ -186,7 +186,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Request}, {@Id}", nameof(UpdateClientAsync), request, id);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Request}, {@Id}", nameof(UpdateClientAsync), request, id);
 
             _validationService.Validate(request);
             if (!_validationService.IsValid)
@@ -207,7 +207,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(UpdateClientAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(UpdateClientAsync));
         }
     }
 
@@ -225,7 +225,7 @@ public class ClientsController : BaseVireoApiController
     {
         try
         {
-            _logger.LogDebug("Starting {Method} with fallowing parameters: {@Id}", nameof(DeleteClientAsync), id);
+            _logger.LogTrace("Starting {Method} with fallowing parameters: {@Id}", nameof(DeleteClientAsync), id);
 
             await _clientService.DeleteClientAsync(id);
 
@@ -240,7 +240,7 @@ public class ClientsController : BaseVireoApiController
         }
         finally
         {
-            _logger.LogDebug("Ending {Method}.", nameof(DeleteClientAsync));
+            _logger.LogTrace("Ending {Method}.", nameof(DeleteClientAsync));
         }
     }
 }
