@@ -1,6 +1,10 @@
+using Serilog;
 using Vireo.Api.Web.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.ConfigureServices(builder.Configuration);
 
