@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{05767E1F-FFFD-4646-9D69-6BADA8DC009E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{25EC2CB4-3CFF-423C-B7CC-E62FE00B6E33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vireo.Api.Web", "src\Vireo.Api.Web\Vireo.Api.Web.csproj", "{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vireo.Api.Core", "src\Vireo.Api.Core\Vireo.Api.Core.csproj", "{946EB57A-0558-42F0-AA0C-AC2DCF30DC11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vireo.Api.Infrastructure", "src\Vireo.Api.Infrastructure\Vireo.Api.Infrastructure.csproj", "{8E04E71A-C7BD-40CA-927F-1B8AE56858A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vireo.Api.Tests", "tests\Vireo.Api.Tests\Vireo.Api.Tests.csproj", "{59EEEF81-B321-4CC4-9C8A-B3707DF15627}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1FA71155-3D58-476C-9CD6-1B11FD8BCF9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{946EB57A-0558-42F0-AA0C-AC2DCF30DC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{946EB57A-0558-42F0-AA0C-AC2DCF30DC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{946EB57A-0558-42F0-AA0C-AC2DCF30DC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{946EB57A-0558-42F0-AA0C-AC2DCF30DC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E04E71A-C7BD-40CA-927F-1B8AE56858A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E04E71A-C7BD-40CA-927F-1B8AE56858A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E04E71A-C7BD-40CA-927F-1B8AE56858A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E04E71A-C7BD-40CA-927F-1B8AE56858A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59EEEF81-B321-4CC4-9C8A-B3707DF15627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59EEEF81-B321-4CC4-9C8A-B3707DF15627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59EEEF81-B321-4CC4-9C8A-B3707DF15627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59EEEF81-B321-4CC4-9C8A-B3707DF15627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA71155-3D58-476C-9CD6-1B11FD8BCF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA71155-3D58-476C-9CD6-1B11FD8BCF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA71155-3D58-476C-9CD6-1B11FD8BCF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA71155-3D58-476C-9CD6-1B11FD8BCF9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C800FB4B-AC03-4186-9CA7-C8B0FAF19E50} = {05767E1F-FFFD-4646-9D69-6BADA8DC009E}
+		{946EB57A-0558-42F0-AA0C-AC2DCF30DC11} = {05767E1F-FFFD-4646-9D69-6BADA8DC009E}
+		{8E04E71A-C7BD-40CA-927F-1B8AE56858A9} = {05767E1F-FFFD-4646-9D69-6BADA8DC009E}
+		{59EEEF81-B321-4CC4-9C8A-B3707DF15627} = {25EC2CB4-3CFF-423C-B7CC-E62FE00B6E33}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06B4E72B-12FB-4AFB-A1E2-F64AFF9683E2}
+	EndGlobalSection
+EndGlobal

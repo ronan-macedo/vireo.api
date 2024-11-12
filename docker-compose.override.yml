@@ -1,0 +1,16 @@
+services:
+  vireo.api.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80    
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=NOPASSWORD
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=vireo_db;Username=vireo;Password=vireo_password
+    ports:
+      - "7100:80"
+      - "7200:443" 
+    volumes:
+      - ~/.aspnet/https:/https:ro
+  postgres:
+    ports:
+      - "5432:5432"

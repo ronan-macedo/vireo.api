@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vireo.Api.Web</name>
+    </assembly>
+    <members>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.GetClientsAsync(Vireo.Api.Core.Domain.Dtos.Requests.PaginatedRequest)">
+            <summary>
+            Retrieves a paginated list of clients.
+            </summary>
+            <param name="request">The object with the paging parameters.</param>
+            <returns>A paginated list of clients.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.GetClientByIdAsync(System.Guid)">
+            <summary>
+            Retrieves a client by its ID.
+            </summary>
+            <param name="id">The ID of the client to retrieve.</param>
+            <returns>The client with the specified ID.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.SearchClientsAsync(Vireo.Api.Core.Domain.Dtos.Requests.SearchClientRequest)">
+            <summary>
+            Searches for clients based on the provided criteria.
+            </summary>
+            <param name="request">The object with the client query.</param>
+            <returns>A paginated list of clients matching the search criteria.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.CreateClientAsync(Vireo.Api.Core.Domain.Dtos.Requests.CreateClientRequest)">
+            <summary>
+            Creates a new client.
+            </summary>
+            <param name="request">The request containing the client details.</param>
+            <returns>The result of the client creation.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.UpdateClientAsync(System.Guid,Vireo.Api.Core.Domain.Dtos.Requests.UpdateClientRequest)">
+            <summary>
+            Updates an existing client.
+            </summary>
+            <param name="id">The ID of the client to update.</param>
+            <param name="request">The request containing the updated client details.</param>
+            <returns>The result of the client update.</returns>
+        </member>
+        <member name="M:Vireo.Api.Web.Controllers.ClientsController.DeleteClientAsync(System.Guid)">
+            <summary>
+            Deletes a client by its ID.
+            </summary>
+            <param name="id">The ID of the client to delete.</param>
+            <returns>The result of the client deletion.</returns>
+        </member>
+    </members>
+</doc>
