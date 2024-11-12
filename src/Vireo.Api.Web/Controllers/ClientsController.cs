@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Vireo.Api.Core.Domain.Dtos.Requests;
 using Vireo.Api.Core.Domain.Dtos.Responses;
 using Vireo.Api.Core.Domain.Entities;
