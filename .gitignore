@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # Ignores local database
 /data/
+
+# Visual Studio Code generated folder
+.vscode
